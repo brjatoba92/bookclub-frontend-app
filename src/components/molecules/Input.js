@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Input as ChakraInput, InputGroup, InputRightElement, Button } from '@chakra-ui/react'
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
 export const Input = (props) => (
     <ChakraInput focusBorderColor='brand.primary' {...props}/>
@@ -16,9 +17,9 @@ Input.Password = (props) => {
         type={show ? 'text' : 'password'}
         placeholder='Enter password'
       />
-      <InputRightElement width='4.5rem'>
-        <Button h='1.75rem' size='sm' onClick={handleClick}>
-          {show ? 'Hide' : 'Show'}
+      <InputRightElement>
+        <Button bg='transparent' _hover={ { bg: 'transparent' } } h='1.75rem' size='sm' onClick={handleClick}>
+          {show ? <ViewOffIcon boxSize='18px' color='brand.primary'/> : <ViewIcon boxSize='18px' color='brand.primary'/>}
         </Button>
       </InputRightElement>
     </InputGroup>
