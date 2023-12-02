@@ -3,22 +3,29 @@ import { Input as ChakraInput, InputGroup, InputRightElement, Button } from '@ch
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
 export const Input = (props) => (
-    <ChakraInput focusBorderColor='brand.primary' {...props}/>
+    <ChakraInput h='56px' fontSize='16px' focusBorderColor='brand.primary' {...props} />
 )
 
 Input.Password = (props) => {
   const [show, setShow] = useState(false)
   const handleClick = () => setShow(!show)
   return (
-    <InputGroup size='md' {...props}>
+    <InputGroup
+      display='flex'
+      h='56px'
+      alignItems='center'
+      justifyContent='center'
+      size='md'
+      {...props}
+    >
       <Input
         focusBorderColor='brand.primary'
         pr='4.5rem'
         type={show ? 'text' : 'password'}
-        placeholder='Enter password'
+        placeholder='********'
       />
-      <InputRightElement>
-        <Button bg='transparent' _hover={ { bg: 'transparent' } } h='1.75rem' size='sm' onClick={handleClick}>
+      <InputRightElement h='100%'>
+        <Button bg='transparent' _hover={ { bg: 'transparent' } } size='sm' onClick={handleClick} h='100%' display='flex' alignItems='center' justifyContent='center'>
           {show ? <ViewOffIcon boxSize='18px' color='brand.primary'/> : <ViewIcon boxSize='18px' color='brand.primary'/>}
         </Button>
       </InputRightElement>
