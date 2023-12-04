@@ -18,8 +18,12 @@ export const LoginScreen = () => {
                     <Flex mt='8px' w='100%' alignItems='flex-end' justifyContent='flex-end'>
                       <Link>Forgot Password</Link>
                     </Flex>
-                    <Button mt='24px'>Signin</Button>
-                    <Link mt='48px'>No have account? Sigup now </Link>
+                    <Button mt='24px'>Login</Button>
+                    <Link.Action
+                      mt='48px'
+                      text='No have account?'
+                      actionText='Sigup Now'
+                    />
                 </Flex>
             </Flex>
             <Flex
