@@ -1,5 +1,5 @@
-import { Flex, Image, Button } from '@chakra-ui/react'
-import { Text, Input, Link } from 'components'
+import { Flex, Image } from '@chakra-ui/react'
+import { Text, Input, Link, Button } from 'components'
 
 export const LoginScreen = () => {
   return (
