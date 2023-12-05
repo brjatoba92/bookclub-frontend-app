@@ -1,7 +1,9 @@
 import { Flex, Image } from '@chakra-ui/react'
 import { Text, Input, Link, Button } from 'components'
+import { useNavigate } from 'react-router-dom'
 
 export const RegisterScreen = () => {
+  const navigate = useNavigate()
   return (
         <Flex flexDir={'row'} w='100vw' h='100vh'>
             <Flex
@@ -21,6 +23,7 @@ export const RegisterScreen = () => {
                 <Input.Password mt='16px' placeholder='Confirm password'/>
                 <Button mt='24px'>Sigup</Button>
                   <Link.Action
+                    onClick={() => navigate('/')}
                     mt='48px'
                     text='Have account?'
                     actionText='Make login here'

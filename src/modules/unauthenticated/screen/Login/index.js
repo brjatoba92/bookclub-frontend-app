@@ -1,7 +1,9 @@
 import { Flex, Image } from '@chakra-ui/react'
 import { Text, Input, Link, Button } from 'components'
+import { useNavigate } from 'react-router-dom'
 
 export const LoginScreen = () => {
+  const navigate = useNavigate()
   return (
         <Flex flexDir={'row'} w='100vw' h='100vh'>
             <Flex
@@ -27,6 +29,7 @@ export const LoginScreen = () => {
                 </Flex>
                 <Button mt='24px'>Login</Button>
                   <Link.Action
+                    onClick={() => navigate('/sigup')}
                     mt='48px'
                     text='No have account?'
                     actionText='Sigup Now'
