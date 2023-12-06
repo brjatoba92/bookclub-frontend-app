@@ -29,10 +29,10 @@ export const LoginScreen = () => {
                     Forgot Password
                   </Link>
                 </Flex>
-                <Button mt='24px'>Login</Button>
+                <Button mb='12px' mt='24px'>Login</Button>
                   <Link.Action
                     onClick={() => navigate('/sigup')}
-                    mt='48px'
+                    mt='8px'
                     text='No have account?'
                     actionText='Sigup Now'
                   />
