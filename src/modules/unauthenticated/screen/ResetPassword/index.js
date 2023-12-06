@@ -1,9 +1,9 @@
 import { Flex, Image } from '@chakra-ui/react'
-import { Text, Input, Link, Button } from 'components'
-import { useNavigate } from 'react-router-dom'
+import { Text, Input, Button, Link } from 'components'
+// import { useNavigate } from 'react-router-dom'
 
-export const RegisterScreen = () => {
-  const navigate = useNavigate()
+export const ResetPasswordScreen = () => {
+  // const navigate = useNavigate()
   return (
         <Flex flexDir={'row'} w='100vw' h='100vh'>
             <Flex
@@ -16,17 +16,17 @@ export const RegisterScreen = () => {
             >
               <Flex flexDir='column' w={['100%', '100%', '100%', '416px']}>
                 <Image h={'48px'} w={'160px'} src='/img/logo.svg' alt='BookClub Logo' />
-                <Text.ScreenTitle mt='48px'>Register</Text.ScreenTitle>
-                <Input mt='24px' placeholder='Name full' />
-                <Input mt='16px' placeholder='E-mail' />
-                <Input.Password mt='16px' placeholder='Password'/>
-                <Input.Password mt='16px' placeholder='Confirm password'/>
-                <Button mb='8px' mt='24px'>Sigup</Button>
-                  <Link.Action
-                    onClick={() => navigate('/')}
+                <Text.ScreenTitle mt='48px'>New password</Text.ScreenTitle>
+                <Text mt='24px' >Digite o código enviado e uma nova senha  nos campos abaixo:</Text>
+                <Input mt='16px' placeholder='Ex: 0000' />
+                <Input.Password mt='16px' placeholder='New password' />
+                <Input.Password mt='16px' placeholder='Confirm new password' />
+                <Button mb='12px' mt='24px'>Save</Button>
+                <Link.Action
+                    // onClick={() => navigate('/sigup')}
                     mt='8px'
-                    text='Have account?'
-                    actionText='Make login here'
+                    text='Without code'
+                    actionText='Click here to code re-send'
                   />
               </Flex>
             </Flex>
