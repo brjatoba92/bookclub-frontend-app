@@ -1,9 +1,28 @@
 import { Flex, Image } from '@chakra-ui/react'
 import { Text, Input, Link, Button } from 'components'
 import { useNavigate } from 'react-router-dom'
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
 
 export const RegisterScreen = () => {
   const navigate = useNavigate()
+  const { handleSubmit, values, handleChange, errors } = useFormik({
+    initialValues: {
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: ''
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().min(3, 'O nome deve ter ao menos 3 caracteres.').required('Nome é obrigatorio.'),
+      email: Yup.string().email('E-mail invalido').required('E-mail é obrigatorio.'),
+      password: Yup.string().min(6, 'senha deve ter ao menos 6 caracteres.').required('Senha é obrigatorio.'),
+      confirmPassword: Yup.string(6, 'Confirmar a senha deve ter ao menos 6 caracteres.').oneOf([Yup.ref('password'), null], 'Senhas não são iguais.')
+    }),
+    onSubmit: (data) => {
+      console.log({ data })
+    }
+  })
   return (
         <Flex flexDir={'row'} w='100vw' h='100vh'>
             <Flex
@@ -17,11 +36,43 @@ export const RegisterScreen = () => {
               <Flex flexDir='column' w={['100%', '100%', '100%', '416px']}>
                 <Image h={'48px'} w={'160px'} src='/img/logo.svg' alt='BookClub Logo' />
                 <Text.ScreenTitle mt='48px'>Register</Text.ScreenTitle>
-                <Input mt='24px' placeholder='Name full' />
-                <Input mt='16px' placeholder='E-mail' />
-                <Input.Password mt='16px' placeholder='Password'/>
-                <Input.Password mt='16px' placeholder='Confirm password'/>
-                <Button mb='8px' mt='24px'>Sigup</Button>
+                <Input
+                  id='name'
+                  name='name'
+                  value={values.name}
+                  mt='24px'
+                  placeholder='Name full'
+                  onChange={handleChange}
+                  error={errors.name}
+                />
+                <Input
+                  id='email'
+                  name='email'
+                  value={values.email}
+                  mt='16px'
+                  placeholder='E-mail'
+                  onChange={handleChange}
+                  error={errors.email}
+                />
+                <Input.Password
+                  id='password'
+                  name='password'
+                  value={values.password}
+                  mt='16px'
+                  placeholder='Password'
+                  onChange={handleChange}
+                  error={errors.password}
+                />
+                <Input.Password
+                  id='confirmPassword'
+                  name='confirmPassword'
+                  value={values.confirmPassword}
+                  mt='16px'
+                  placeholder='Confirm password'
+                  onChange={handleChange}
+                  error={errors.confirmPassword}
+                />
+                <Button onClick={handleSubmit} mb='8px' mt='24px'>Sigup</Button>
                   <Link.Action
                     onClick={() => navigate('/')}
                     mt='8px'
