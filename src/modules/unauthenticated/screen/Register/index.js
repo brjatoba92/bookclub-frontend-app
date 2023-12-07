@@ -1,4 +1,4 @@
-import { Flex, Image } from '@chakra-ui/react'
+import { Flex, Image, useToast } from '@chakra-ui/react'
 import { Text, Input, Link, Button } from 'components'
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
@@ -8,12 +8,25 @@ import { registerCall } from 'services/api/requests'
 
 export const RegisterScreen = () => {
   const navigate = useNavigate()
+  const toast = useToast()
   const mutation = useMutation(newUser => registerCall(newUser), {
     onError: (error) => {
-      console.log({ error })
+      toast({
+        title: 'Falha ao criar a conta.',
+        description: error?.response?.data?.error || 'Por favor, tente novamente',
+        status: 'error',
+        duration: 3000,
+        isClosable: true
+      })
     },
-    onSuccess: (data) => {
-      console.log({ data })
+    onSuccess: () => {
+      toast({
+        title: 'Conta criada.',
+        status: 'success',
+        duration: 6000,
+        isClosable: true
+      })
+      navigate('/')
     }
   })
   const { handleSubmit, values, handleChange, errors } = useFormik({
