@@ -58,7 +58,7 @@ export const LoginScreen = () => {
                   alignItems='flex-end'
                   justifyContent='flex-end'
                 >
-                  <Link onClick={() => navigate('/forgotpwd')}>
+                  <Link onClick={() => navigate('/forgot-pwd')}>
                     Forgot Password
                   </Link>
                 </Flex>
