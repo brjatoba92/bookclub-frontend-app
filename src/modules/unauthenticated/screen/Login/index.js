@@ -34,6 +34,7 @@ export const LoginScreen = () => {
                 <Image h={'48px'} w={'160px'} src='/img/logo.svg' alt='BookClub Logo' />
                 <Text.ScreenTitle mt='48px'>Login</Text.ScreenTitle>
                 <Input
+                  type='email'
                   id='email'
                   name='email'
                   value={values.email}
