@@ -19,7 +19,6 @@ export const LoginScreen = () => {
       console.log({ data })
     }
   })
-  console.log({ values, errors })
 
   return (
         <Flex flexDir={'row'} w='100vw' h='100vh'>
@@ -41,6 +40,7 @@ export const LoginScreen = () => {
                   mt='24px'
                   placeholder='user@email.com'
                   onChange={handleChange}
+                  error={errors.email}
                 />
                 <Input.Password
                   id='password'
@@ -49,6 +49,7 @@ export const LoginScreen = () => {
                   mt='16px'
                   placeholder='*****'
                   onChange={handleChange}
+                  error={errors.password}
                 />
                 <Flex
                   mt='8px'
