@@ -1,11 +1,35 @@
-import { Flex, Image } from '@chakra-ui/react'
+import { Flex, Image, useToast } from '@chakra-ui/react'
 import { Text, Input, Link, Button } from 'components'
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { useMutation } from 'react-query'
+import { loginCall } from 'services/api/requests'
 
 export const LoginScreen = () => {
   const navigate = useNavigate()
+  const toast = useToast()
+  const mutation = useMutation(newUser => loginCall(newUser), {
+    onError: (error) => {
+      toast({
+        title: 'Falha ao autenticar.',
+        description: error?.response?.data?.error || 'Por favor, tente novamente',
+        status: 'error',
+        duration: 3000,
+        isClosable: true
+      })
+    },
+    onSuccess: () => {
+      toast({
+        title: 'Login efettuado com sucesso.',
+        status: 'success',
+        duration: 6000,
+        isClosable: true
+      })
+      navigate('/home')
+    }
+  })
+
   const { handleSubmit, values, handleChange, errors } = useFormik({
     initialValues: {
       email: '',
@@ -16,7 +40,7 @@ export const LoginScreen = () => {
       password: Yup.string().min(6, 'senha deve ter ao menos 6 caracteres').required('Senha é obrigatorio')
     }),
     onSubmit: (data) => {
-      console.log({ data })
+      mutation.mutate(data)
     }
   })
 
@@ -62,7 +86,14 @@ export const LoginScreen = () => {
                     Forgot Password
                   </Link>
                 </Flex>
-                <Button onClick={handleSubmit} mb='12px' mt='24px'>Login</Button>
+                <Button
+                  isLoading={mutation.isLoading}
+                  onClick={handleSubmit}
+                  mb='12px'
+                  mt='24px'
+                >
+                  Login
+                </Button>
                   <Link.Action
                     onClick={() => navigate('/sigup')}
                     mt='8px'
