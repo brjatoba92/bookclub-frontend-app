@@ -1,11 +1,37 @@
-import { Flex, Image } from '@chakra-ui/react'
+import { Flex, Image, useToast } from '@chakra-ui/react'
 import { Text, Input, Button, Link } from 'components'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { useMutation } from 'react-query'
+import { resetPasswordCall } from 'services/api/requests'
 
 export const ResetPasswordScreen = () => {
   const navigate = useNavigate()
+  const toast = useToast()
+  const [searchParams] = useSearchParams()
+
+  const mutation = useMutation((data) => resetPasswordCall(data), {
+    onError: (error) => { // mostrando error
+      toast({
+        title: 'Request failed.',
+        description: error?.response?.data?.error || 'Please try again',
+        status: 'error',
+        duration: 3000,
+        isClosable: true
+      })
+    },
+    onSuccess: () => {
+      toast({
+        title: 'Password changed successfully!',
+        status: 'success',
+        duration: 6000,
+        isClosable: true
+      })
+      navigate('/')
+    }
+  })
+
   const { handleSubmit, values, handleChange, errors } = useFormik({
     initialValues: {
       token: '',
@@ -13,12 +39,16 @@ export const ResetPasswordScreen = () => {
       confirmPassword: ''
     },
     validationSchema: Yup.object({
-      token: Yup.string().length(4, 'O token deve ter 4 caracteres.').required('Token é obrigatorio.'),
-      password: Yup.string().min(6, 'senha deve ter ao menos 6 caracteres.').required('Senha é obrigatorio.'),
-      confirmPassword: Yup.string(6, 'Confirmar a senha deve ter ao menos 6 caracteres.').oneOf([Yup.ref('password'), null], 'Senhas não são iguais.')
+      token: Yup.string().length(6, 'The token must be 6 characters long.').required('Token is mandatory.'),
+      password: Yup.string().min(6, 'The password must have at least 6 characters.').required('Password is mandatory.'),
+      confirmPassword: Yup.string(6, 'Confirm password must have at least 6 characters.').oneOf([Yup.ref('password'), null], 'Passwords are not the same.')
     }),
     onSubmit: (data) => {
-      navigate('/login')
+      mutation.mutate({
+        email: searchParams.get('email'),
+        token: data.token,
+        password: data.password
+      })
     }
   })
   return (
@@ -34,7 +64,7 @@ export const ResetPasswordScreen = () => {
               <Flex flexDir='column' w={['100%', '100%', '100%', '416px']}>
                 <Image h={'48px'} w={'160px'} src='/img/logo.svg' alt='BookClub Logo' />
                 <Text.ScreenTitle mt='48px'>New password</Text.ScreenTitle>
-                <Text mt='24px' >Digite o código enviado e uma nova senha  nos campos abaixo:</Text>
+                <Text mt='24px' >Enter the code sent and a new password in the fields below:</Text>
                 <Input
                   id='token'
                   name='token'
@@ -42,7 +72,8 @@ export const ResetPasswordScreen = () => {
                   onChange={handleChange}
                   error={errors.token}
                   mt='16px'
-                  placeholder='Ex: 0000'
+                  placeholder='Ex: 000000'
+                  maxLenght={6}
                 />
                 <Input.Password
                   id='password'
@@ -62,7 +93,7 @@ export const ResetPasswordScreen = () => {
                   mt='16px'
                   placeholder='Confirm new password'
                 />
-                <Button mb='12px' mt='24px' onClick={handleSubmit}>Save</Button>
+                <Button isLoading={mutation.isLoading} mb='12px' mt='24px' onClick={handleSubmit}>Save</Button>
                 <Link.Action
                     // onClick={() => navigate('/sigup')}
                     mt='8px'

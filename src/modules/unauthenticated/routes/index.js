@@ -14,11 +14,11 @@ export const unauthRoutes = [
     element: <RegisterScreen />
   },
   {
-    path: '/forgot-pwd',
+    path: '/forgot-password',
     element: <ForgotPasswordScreen />
   },
   {
-    path: '/reset-pwd',
+    path: '/reset-password',
     element: <ResetPasswordScreen />
   }
 ]
