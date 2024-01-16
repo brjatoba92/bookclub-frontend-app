@@ -1,11 +1,36 @@
-import { Flex, Image } from '@chakra-ui/react'
+import { Flex, Image, useToast } from '@chakra-ui/react'
 import { Text, Input, Button } from 'components'
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { useMutation } from 'react-query'
+import { forgotPasswordCall } from 'services/api/requests'
 
 export const ForgotPasswordScreen = () => {
   const navigate = useNavigate()
+  const toast = useToast()
+
+  const mutation = useMutation((data) => forgotPasswordCall(data), {
+    onError: (error) => {
+      toast({
+        title: 'Request failed.',
+        description: error?.response?.data?.error || 'Please try again',
+        status: 'error',
+        duration: 3000,
+        isClosable: true
+      })
+    },
+    onSuccess: (data) => {
+      toast({
+        title: 'Email successfully sent',
+        status: 'success',
+        duration: 6000,
+        isClosable: true
+      })
+      navigate(`/reset-password?email=${values.email}`)
+    }
+  })
+
   const { handleSubmit, values, handleChange, errors } = useFormik({
     initialValues: {
       email: ''
@@ -14,8 +39,7 @@ export const ForgotPasswordScreen = () => {
       email: Yup.string().email('E-mail invalido').required('E-mail é obrigatorio.')
     }),
     onSubmit: (data) => {
-      console.log({ data })
-      navigate('/reset-pwd')
+      mutation.mutate(data)
     }
   })
   return (
@@ -31,7 +55,7 @@ export const ForgotPasswordScreen = () => {
               <Flex flexDir='column' w={['100%', '100%', '100%', '416px']}>
                 <Image h={'48px'} w={'160px'} src='/img/logo.svg' alt='BookClub Logo' />
                 <Text.ScreenTitle mt='48px'>Forgot password</Text.ScreenTitle>
-                <Text mt='24px' >Digite abaixo seu e-mail que enviaremos um código de recuperação de senha:</Text>
+                <Text mt='24px' >Enter your email below and we will send you a password recovery code:</Text>
                 <Input
                   type='email'
                   id='email'
@@ -42,7 +66,7 @@ export const ForgotPasswordScreen = () => {
                   mt='24px'
                   placeholder='E-mail'
                 />
-                <Button mt='24px' onClick={handleSubmit} >Next</Button>
+                <Button isLoading={mutation.isLoading} mt='24px' onClick={handleSubmit} >Next</Button>
               </Flex>
             </Flex>
             <Flex
