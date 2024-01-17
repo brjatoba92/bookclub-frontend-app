@@ -6,9 +6,12 @@ import * as Yup from 'yup'
 import { useMutation } from 'react-query'
 import { loginCall } from 'services/api/requests'
 import { saveItem } from 'services/storage'
+import { useDispatch } from 'react-redux'
+import { setAll } from 'services/store/slices/user'
 
 export const LoginScreen = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const toast = useToast()
   const mutation = useMutation(newUser => loginCall(newUser), {
     onError: (error) => {
@@ -28,6 +31,10 @@ export const LoginScreen = () => {
         isClosable: true
       })
       saveItem('@bookclub_token', data?.data?.token)
+      dispatch(setAll({
+        token: data?.data?.token,
+        user: data?.data?.user
+      }))
       navigate('/home')
     }
   })
