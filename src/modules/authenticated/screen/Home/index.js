@@ -6,8 +6,19 @@ export const HomeScreen = () => {
   const userStore = useSelector((state) => state.user)
   console.log({ userStore })
   return (
-      <Flex>
+      <Flex flexDir='column'>
         <NavBar/>
+        <Flex w='100%' h='200px' paddingX={['24px', '48px', '80px', '112px']} mt='48px'>
+          <Flex
+            bgImage="url('/img/banner.svg')"
+            bgSize='cover'
+            bgPosition='center'
+            bgRepeat='no-repeat'
+            borderRadius='24px'
+            w='100%'
+            h='100%'
+          />
+        </Flex>
       </Flex>
   )
 }
