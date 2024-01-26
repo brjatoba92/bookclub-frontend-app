@@ -1,14 +1,12 @@
 import { Flex } from '@chakra-ui/react'
 import { useSelector } from 'react-redux'
-import { NavBar, BookList } from 'components'
-import { useQuery } from 'react-query'
-import { getHighlightedBooks } from 'services/api/requests'
+import { NavBar, BookList, CategoryList } from 'components'
+
 
 export const HomeScreen = () => {
+  
   const userStore = useSelector((state) => state.user)
   console.log({ userStore })
-  const { error, data } = useQuery('highlighted', getHighlightedBooks)
-  console.log({ error, data })
   return (
       <Flex flexDir='column'>
         <NavBar/>
@@ -23,7 +21,8 @@ export const HomeScreen = () => {
             h='100%'
           />
         </Flex>
-        <BookList data={data?.data} />
+        <BookList />
+        <CategoryList />
       </Flex>
   )
 }
