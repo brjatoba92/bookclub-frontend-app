@@ -7,7 +7,7 @@ export const getHighlightedBooks = () =>
     }
   })
 
-  export const getBooksByCategory = (id) =>
+export const getBooksByCategory = (id) =>
   api.get(`/book?category_id=${id}`, {
     headers: {
       Authorization: `bearer ${localStorage.getItem('@bookclub_token')}`
