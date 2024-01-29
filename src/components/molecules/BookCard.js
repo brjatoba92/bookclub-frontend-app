@@ -21,7 +21,6 @@ export const BookCard = ({ cover_url, name, author }) => {
       />
       <Text
         noOfLines={1}
-        maxWidth={['120px', '154px']}
         textAlign="center"
         mt="8px"
         fontSize="12px"
