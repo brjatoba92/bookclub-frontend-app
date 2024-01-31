@@ -73,34 +73,37 @@ export const BookDetailScreen = () => {
       <NavBar/>
       <Flex
         w='100%'
+        maxW='100vw'
         paddingX={['24px', '48px', '80px', '112px']}
         mt={['24px', '48px']}
-        flexDir='row'
+        flexDir={['column', 'row']}
+        alignItems={['center', 'flex-start']}
+        justifyContent={['center', 'flex-start']}
       >
         <Flex
+          w={['170px', '290px']}
+          h={['256px', '358px']}
           bgImage={`url(${data?.data?.book?.cover_url})`}
           bgSize='cover'
           bgPosition='center'
           bgRepeat='no-repeat'
           borderRadius='12px'
-          w={['238px']}
-          h={['358px']}
         />
-        <Flex w='70%' mx='48px' flexDir='column'>
+        <Flex w={['100%', '70%']} mx={['0px', '48px']} flexDir='column' mt={['24px', '0px']}>
           <Text.ScreenTitle fontSize='24px'>{data?.data?.book?.name}</Text.ScreenTitle>
           <Text fontSize='16px' mt='8px'>{data?.data?.book?.author?.name}</Text>
           <Flex flexDir='column' color='brand.grayDark'>
             <Text.ScreenTitle mt='24px'>About</Text.ScreenTitle>
-            <Flex mt='8px' w='100%' flexDir='row' justifyContent='space-between'>
+            <Flex mt='8px' w='100%' flexDir={['column', 'row']} justifyContent={['flex-start', 'space-between']}>
               <Text mt='8px' fontSize='14px'>Category: {data?.data?.book?.category?.name}</Text>
               <Text fontSize='14px'>Pages: {data?.data?.book?.pages}</Text>
               <Text fontSize='14px'>Publication Year: {new Date(data?.data?.book?.release_date).getFullYear()}</Text>
             </Flex>
             <Text.ScreenTitle mt='16px'> Synopsis: </Text.ScreenTitle>
-            <Text fontSize='12px' mt='8px'>{data?.data?.book?.synopsis}</Text>
+            <Text maxWidth={['80%']} fontSize='12px' mt='8px'>{data?.data?.book?.synopsis}</Text>
           </Flex>
         </Flex>
-        <Flex>
+        <Flex w={['100%', 'auto']} alignItems={['center', 'flex-start']} justifyContent={['center', 'flex-start']}>
           <Button
             isLoading={
               isLoading ||
@@ -109,6 +112,7 @@ export const BookDetailScreen = () => {
             }
             secondary={data?.data?.favorite}
             onClick={() => handleButtonClick()}
+            mt={['24px', '0px']}
           >
             {data?.data?.favorite ? 'Remove From Favorites' : 'Add to Favorites'}
           </Button>
