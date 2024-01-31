@@ -28,7 +28,7 @@ export const CategoryList = ({ title, categoryId }) => {
       mt={['24px', '48px']}
       paddingX={['24px', '48px', '80px', '112px']}
       overflowX={['scroll', 'auto']}
-      h='400px'
+      h='520px'
       css={{
         '::-webkit-scrollbar': {
           display: 'none'
