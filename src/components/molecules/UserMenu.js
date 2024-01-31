@@ -1,5 +1,6 @@
 import { Avatar, Menu, MenuButton, MenuList, Flex } from '@chakra-ui/react'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { Text, MenuItem } from 'components/atoms'
 import { BsBookmarkHeart, BsPersonCheck } from 'react-icons/bs'
 import { RiLockPasswordLine } from 'react-icons/ri'
@@ -8,43 +9,50 @@ import { MdLogout } from 'react-icons/md'
 
 export const UserMenu = () => {
   const userStore = useSelector((state) => state.user)
+  const navigate = useNavigate()
   console.log({ userStore })
   const menuOptions = [
     {
       id: 0,
       icon: BsBookmarkHeart,
       text: 'Favorites',
-      divider: false
+      divider: false,
+      onClick: () => navigate('/favorites')
     },
     {
       id: 1,
       icon: BsPersonCheck,
       text: 'User data',
-      divider: false
+      divider: false,
+      onClick: () => navigate('/home')
     },
     {
       id: 2,
       icon: RiLockPasswordLine,
       text: 'Change password',
-      divider: true
+      divider: true,
+      onClick: () => navigate('/home')
     },
     {
       id: 3,
       icon: IoDocumentTextOutline,
       text: 'Terms of use',
-      divider: false
+      divider: false,
+      onClick: () => navigate('/home')
     },
     {
       id: 4,
       icon: IoDocumentOutline,
       text: 'Privacy Policy',
-      divider: true
+      divider: true,
+      onClick: () => navigate('/home')
     },
     {
       id: 5,
       icon: MdLogout,
       text: 'Logout',
-      divider: false
+      divider: false,
+      onClick: () => navigate('/home')
     }
   ]
   return (
@@ -77,6 +85,7 @@ export const UserMenu = () => {
               icon={item.icon}
               text={item.text}
               divider={item.divider}
+              onClick={() => item.onClick()}
             />
           )
         }
