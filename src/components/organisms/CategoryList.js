@@ -8,7 +8,11 @@ import { getBooksByCategory, getCategories } from 'services/api/requests'
 export const CategoryList = ({ title, categoryId }) => {
   const [selected, setSelected] = useState(categoryId)
   const { data } = useQuery('categories', getCategories)
-  const { data: bookQuery, refetch, isLoading } = useQuery(
+  const {
+    data: bookQuery,
+    refetch,
+    isLoading
+  } = useQuery(
     ['booksById', selected],
     () => getBooksByCategory(selected),
     {
@@ -77,16 +81,17 @@ export const CategoryList = ({ title, categoryId }) => {
         }}
       >
         {
-          isLoading &&
+          isLoading && (
             <Flex alignItems='center' justifyContent='center' h='230px'>
               <Spinner />
             </Flex>
-        }
+          )}
         {
-          !isLoading && bookQuery && bookQuery?.data?.lenght === 0 && (
+          (!isLoading && bookQuery?.data?.lenght === 0) ||
+          (!bookQuery && (
             <Flex alignItems='center' justifyContent='center' h='230px'>
               <Text>Nenhum livro encontrado</Text>
-            </Flex>)
+            </Flex>))
         }
         {bookQuery &&
           bookQuery?.data.map((item) => (
