@@ -7,7 +7,7 @@ import { RiLockPasswordLine } from 'react-icons/ri'
 import { IoDocumentTextOutline, IoDocumentOutline } from 'react-icons/io5'
 import { MdLogout } from 'react-icons/md'
 
-export const UserMenu = () => {
+export const UserMenu = ({ setShowModal }) => {
   const userStore = useSelector((state) => state.user)
   const navigate = useNavigate()
   console.log({ userStore })
@@ -24,14 +24,14 @@ export const UserMenu = () => {
       icon: BsPersonCheck,
       text: 'User data',
       divider: false,
-      onClick: () => navigate('/home')
+      onClick: () => setShowModal('user')
     },
     {
       id: 2,
       icon: RiLockPasswordLine,
       text: 'Change password',
       divider: true,
-      onClick: () => navigate('/home')
+      onClick: () => setShowModal('password')
     },
     {
       id: 3,
@@ -45,7 +45,7 @@ export const UserMenu = () => {
       icon: IoDocumentOutline,
       text: 'Privacy Policy',
       divider: true,
-      onClick: () => navigate('/home')
+      onClick: () => setShowModal('privacy-policy')
     },
     {
       id: 5,
@@ -58,37 +58,33 @@ export const UserMenu = () => {
   return (
     <Menu>
       <MenuButton>
-        <Flex alignItems='center' justifyContent='center' flexDir='row'>
+        <Flex alignItems="center" justifyContent="center" flexDir="row">
           <Avatar
             w={['36px', '48px']}
             h={['36px', '48px']}
             name={userStore?.user?.name}
             src={userStore?.user?.avatar_url}
-            borderWidth='2px'
-            borderColor='brand.primary'
-            bg='brand.greyDark'
+            borderWidth="2px"
+            borderColor="brand.primary"
+            bg="brand.grayLight"
             mr={['6px', '12px']}
           />
           <Flex display={['none', 'flex']}>
-            <Text maxLength='40px'>
-              {userStore?.user?.name}
-            </Text>
+            <Text maxLength="40px">{userStore?.user?.name}</Text>
           </Flex>
         </Flex>
       </MenuButton>
       <MenuList>
-        {
-          menuOptions.map((item) =>
-            <MenuItem
-              key={`menu_item_${item.id}`}
-              id={item.id}
-              icon={item.icon}
-              text={item.text}
-              divider={item.divider}
-              onClick={() => item.onClick()}
-            />
-          )
-        }
+        {menuOptions.map((item) => (
+          <MenuItem
+            key={`menu_item_${item.id}`}
+            id={item.id}
+            icon={item.icon}
+            text={item.text}
+            divider={item.divider}
+            onClick={() => item.onClick()}
+          />
+        ))}
       </MenuList>
     </Menu>
   )
