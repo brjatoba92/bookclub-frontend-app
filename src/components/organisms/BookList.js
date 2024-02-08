@@ -1,9 +1,8 @@
-import { Flex, Spinner } from '@chakra-ui/react'
+import { Flex } from '@chakra-ui/react'
 import { BookCard } from 'components/molecules'
-import { Text } from 'components/atoms'
+import { Text, Loader, EmptyMessage } from 'components/atoms'
 
 export const BookList = ({ title, data, isLoading }) => {
-  console.log({ data, isLoading })
   return (
     <Flex
       flexDir="column"
@@ -17,26 +16,15 @@ export const BookList = ({ title, data, isLoading }) => {
       }}
     >
       <Text.ScreenTitle>{title}</Text.ScreenTitle>
-      <Flex mt={['12px', '24px']} flexDir="row">
-        {
-          isLoading && (
-            <Flex alignItems='center' justifyContent='center' h='230px'>
-              <Spinner />
-            </Flex>
-          )
-        }
-        {
-          (!isLoading && data?.lenght === 0) ||
-          (!data && (
-            <Flex alignItems='center' justifyContent='center' h='30px'>
-              <Text>Nenhum livro encontrado</Text>
-            </Flex>
-          ))}
+      {isLoading && <Loader />}
 
+      {(!data || data?.lenght === 0) && (
+          <EmptyMessage>Nenhum livro encontrado</EmptyMessage>
+      )}
+
+      <Flex mt={['12px', '24px']} flexDir="row">
         {data &&
-          data?.map((item) => (
-            <BookCard key={`book_${item.id}`} {...item} />
-          ))}
+          data?.map((item) => <BookCard key={`book_${item.id}`} {...item} />)}
       </Flex>
     </Flex>
   )
