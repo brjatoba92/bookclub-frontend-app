@@ -17,20 +17,16 @@ export const AuthorList = ({ data, isLoading }) => {
     >
       <Text.ScreenTitle>Authors</Text.ScreenTitle>
       <Flex mt={['12px', '24px']} flexDir="row">
-        {
-          isLoading && (
-            <Flex alignItems='center' justifyContent='center' h='230px'>
-              <Spinner />
-            </Flex>
-          )
-        }
-        {
-          (!isLoading && data?.lenght === 0) ||
-          (!data && (
-            <Flex alignItems='center' justifyContent='center' h='30px'>
-              <Text>Nenhum autor encontrado</Text>
-            </Flex>
-          ))}
+        {isLoading && (
+          <Flex alignItems="center" justifyContent="center" h="230px">
+            <Spinner />
+          </Flex>
+        )}
+        {((!isLoading && data?.lenght === 0) || !data) && (
+          <Flex alignItems="center" justifyContent="center" h="30px">
+            <Text>Nenhum autor encontrado</Text>
+          </Flex>
+        )}
 
         {data &&
           data?.map((item) => (
