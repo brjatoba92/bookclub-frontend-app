@@ -37,7 +37,7 @@ export const UserMenu = ({ setShowModal }) => {
       icon: IoDocumentTextOutline,
       text: 'Terms of use',
       divider: false,
-      onClick: () => navigate('/home')
+      onClick: () => setShowModal('terms')
     },
     {
       id: 4,
