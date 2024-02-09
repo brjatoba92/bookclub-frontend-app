@@ -10,7 +10,6 @@ import { MdLogout } from 'react-icons/md'
 export const UserMenu = ({ setShowModal }) => {
   const userStore = useSelector((state) => state.user)
   const navigate = useNavigate()
-  console.log({ userStore })
   const menuOptions = [
     {
       id: 0,

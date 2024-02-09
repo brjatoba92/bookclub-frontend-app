@@ -6,17 +6,49 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
-  Avatar
+  Avatar,
+  useToast
 } from '@chakra-ui/react'
 import { Text, Button } from 'components/atoms'
 import { Input } from 'components/molecules'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useMutation } from 'react-query'
+import { updateUserCall } from 'services/api/requests'
+import { setUser } from 'services/store/slices/user'
 
 export const UserModal = ({ onClose }) => {
+  const toast = useToast()
   const userStore = useSelector((state) => state.user)
-  const { values, handleChange, errors } = useFormik({
+  const dispatch = useDispatch()
+  const mutation = useMutation((data) => updateUserCall(data), {
+    onError: (error) => {
+      toast({
+        title: 'Falha ao atualizar usuario.',
+        description:
+          error?.response?.data?.error || 'Por favor, tente novamente',
+        status: 'error',
+        duration: 3000,
+        isClosable: true
+      })
+    },
+    onSuccess: (data) => {
+      toast({
+        title: 'Usuario atualizado com sucesso.',
+        status: 'success',
+        duration: 6000,
+        isClosable: true
+      })
+      dispatch(
+        setUser({
+          user: data?.data?.user
+        })
+      )
+    }
+  })
+
+  const { values, handleChange, errors, handleSubmit } = useFormik({
     initialValues: {
       name: userStore?.user?.name,
       email: userStore?.user?.email
@@ -29,7 +61,9 @@ export const UserModal = ({ onClose }) => {
         .email('E-mail invalido')
         .required('E-mail é obrigatorio.')
     }),
-    onSubmit: (data) => {}
+    onSubmit: (data) => {
+      mutation.mutate(data)
+    }
   })
   return (
     <Drawer size={'sm'} isOpen={true} placement="right" onClose={onClose}>
@@ -70,8 +104,13 @@ export const UserModal = ({ onClose }) => {
             onChange={handleChange}
             error={errors.email}
           />
-          <Button mt="64px" w="100%">
-            Save changes
+          <Button
+            onClick={handleSubmit}
+            isLoading={mutation.isLoading}
+            mt={['64px']}
+            w="100%"
+          >
+            Update
           </Button>
         </DrawerBody>
       </DrawerContent>
