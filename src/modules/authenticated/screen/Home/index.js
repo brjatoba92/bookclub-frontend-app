@@ -6,8 +6,6 @@ import { getHighlightedBooks } from 'services/api/requests'
 
 export const HomeScreen = () => {
   const { data, isLoading } = useQuery('highlighted', getHighlightedBooks)
-  // const userStore = useSelector((state) => state.user)
-  // console.log({ userStore })
   return (
       <Flex flexDir='column'>
         <NavBar/>
