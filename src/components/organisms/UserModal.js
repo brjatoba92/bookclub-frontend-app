@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import {
   Flex,
   Drawer,
@@ -19,6 +20,7 @@ import { updateUserCall } from 'services/api/requests'
 import { setUser } from 'services/store/slices/user'
 
 export const UserModal = ({ onClose }) => {
+  const inputFileRef = useRef()
   const toast = useToast()
   const userStore = useSelector((state) => state.user)
   const dispatch = useDispatch()
@@ -65,6 +67,9 @@ export const UserModal = ({ onClose }) => {
       mutation.mutate(data)
     }
   })
+
+  const onChangeImage = async (event) => {}
+
   return (
     <Drawer size={'sm'} isOpen={true} placement="right" onClose={onClose}>
       <DrawerOverlay />
@@ -76,7 +81,15 @@ export const UserModal = ({ onClose }) => {
 
         <DrawerBody>
           <Flex w="100%" alignItems="center" justifyContent="center">
+            <input
+              ref={inputFileRef}
+              style={{ display: 'none' }}
+              onChange={onChangeImage}
+              type="file"
+              accept="image/*"
+            />
             <Avatar
+              cursor="pointer"
               w={['36px', '100px']}
               h={['36px', '100px']}
               name={userStore?.user?.name}
@@ -84,6 +97,7 @@ export const UserModal = ({ onClose }) => {
               borderWidth="4px"
               borderColor="brand.primary"
               bg="brand.grayLight"
+              onClick={() => inputFileRef?.current?.click()}
             />
           </Flex>
           <Input
