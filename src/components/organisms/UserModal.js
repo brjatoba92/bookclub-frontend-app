@@ -8,7 +8,8 @@ import {
   DrawerContent,
   DrawerCloseButton,
   Avatar,
-  useToast
+  useToast,
+  Icon
 } from '@chakra-ui/react'
 import { Text, Button } from 'components/atoms'
 import { Input } from 'components/molecules'
@@ -18,6 +19,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useMutation } from 'react-query'
 import { updateUserCall, updateUserAvatar } from 'services/api/requests'
 import { setUser } from 'services/store/slices/user'
+import { HiMiniPencilSquare } from 'react-icons/hi2'
 
 export const UserModal = ({ onClose }) => {
   const inputFileRef = useRef()
@@ -62,7 +64,6 @@ export const UserModal = ({ onClose }) => {
       })
     },
     onSuccess: (data) => {
-      console.log({ data })
       toast({
         title: 'Avatar do usuario atualizado com sucesso.',
         status: 'success',
@@ -130,8 +131,8 @@ export const UserModal = ({ onClose }) => {
             />
             <Avatar
               cursor="pointer"
-              w={['36px', '100px']}
-              h={['36px', '100px']}
+              w={['100px']}
+              h={['100px']}
               name={userStore?.user?.name}
               src={userStore?.user?.avatar_url}
               borderWidth="4px"
@@ -139,6 +140,25 @@ export const UserModal = ({ onClose }) => {
               bg="brand.grayLight"
               onClick={() => inputFileRef?.current?.click()}
             />
+            <Flex
+              margin="-32px"
+              position="relative"
+              w="32px"
+              h="32px"
+              borderRadius="16px"
+              bg="brand.primary"
+              top="36px"
+              alignItems="center"
+              justifyContent="center"
+              onClick={() => inputFileRef?.current?.click()}
+              cursor="pointer"
+            >
+              <Icon
+                color="brand.black"
+                boxSize="18px"
+                as={HiMiniPencilSquare}
+              />
+            </Flex>
           </Flex>
           <Input
             id="name"
