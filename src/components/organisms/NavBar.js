@@ -4,6 +4,8 @@ import { SearchBar, UserMenu } from 'components/molecules'
 import { useNavigate } from 'react-router-dom'
 import { UserModal } from './UserModal'
 import { PasswordModal } from './PasswordModal'
+import { TermsModal } from './TermsModal'
+import { PrivacyPolicyModal } from './PrivacyPolicyModal'
 
 export const NavBar = ({ query, setQuery }) => {
   const [showModal, setShowModal] = useState()
@@ -36,6 +38,8 @@ export const NavBar = ({ query, setQuery }) => {
 
       {showModal === 'user' && <UserModal onClose={onCloseModal} />}
       {showModal === 'password' && <PasswordModal onClose={onCloseModal} />}
+      {showModal === 'terms' && <TermsModal onClose={onCloseModal} />}
+      {showModal === 'privacy-policy' && <PrivacyPolicyModal onClose={onCloseModal} />}
     </Flex>
   )
 }
