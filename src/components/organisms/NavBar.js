@@ -3,6 +3,7 @@ import { Flex, Image } from '@chakra-ui/react'
 import { SearchBar, UserMenu } from 'components/molecules'
 import { useNavigate } from 'react-router-dom'
 import { UserModal } from './UserModal'
+import { PasswordModal } from './PasswordModal'
 
 export const NavBar = ({ query, setQuery }) => {
   const [showModal, setShowModal] = useState()
@@ -34,6 +35,7 @@ export const NavBar = ({ query, setQuery }) => {
       <UserMenu setShowModal={setShowModal} />
 
       {showModal === 'user' && <UserModal onClose={onCloseModal} />}
+      {showModal === 'password' && <PasswordModal onClose={onCloseModal} />}
     </Flex>
   )
 }
