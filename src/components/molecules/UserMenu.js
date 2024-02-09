@@ -7,7 +7,7 @@ import { RiLockPasswordLine } from 'react-icons/ri'
 import { IoDocumentTextOutline, IoDocumentOutline } from 'react-icons/io5'
 import { MdLogout } from 'react-icons/md'
 
-export const UserMenu = ({ setShowModal }) => {
+export const UserMenu = ({ setShowModal, onLogout }) => {
   const userStore = useSelector((state) => state.user)
   const navigate = useNavigate()
   const menuOptions = [
@@ -51,7 +51,7 @@ export const UserMenu = ({ setShowModal }) => {
       icon: MdLogout,
       text: 'Logout',
       divider: false,
-      onClick: () => navigate('/home')
+      onClick: () => onLogout()
     }
   ]
   return (
