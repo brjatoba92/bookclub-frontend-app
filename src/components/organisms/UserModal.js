@@ -16,7 +16,7 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
 import { useMutation } from 'react-query'
-import { updateUserCall } from 'services/api/requests'
+import { updateUserCall, updateUserAvatar } from 'services/api/requests'
 import { setUser } from 'services/store/slices/user'
 
 export const UserModal = ({ onClose }) => {
@@ -50,6 +50,33 @@ export const UserModal = ({ onClose }) => {
     }
   })
 
+  const mutationAvatar = useMutation((data) => updateUserAvatar(data), {
+    onError: (error) => {
+      toast({
+        title: 'Falha ao atualizar avatar do usuario.',
+        description:
+          error?.response?.data?.error || 'Por favor, tente novamente',
+        status: 'error',
+        duration: 3000,
+        isClosable: true
+      })
+    },
+    onSuccess: (data) => {
+      console.log({ data })
+      toast({
+        title: 'Avatar do usuario atualizado com sucesso.',
+        status: 'success',
+        duration: 6000,
+        isClosable: true
+      })
+      dispatch(
+        setUser({
+          user: data?.data
+        })
+      )
+    }
+  })
+
   const { values, handleChange, errors, handleSubmit } = useFormik({
     initialValues: {
       name: userStore?.user?.name,
@@ -68,7 +95,20 @@ export const UserModal = ({ onClose }) => {
     }
   })
 
-  const onChangeImage = async (event) => {}
+  const onChangeImage = async (event) => {
+    const file = event?.target?.files[0]
+    const type = file?.type
+
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = () => {
+      const base64 = reader.result
+      mutationAvatar.mutate({
+        mime: type,
+        base64
+      })
+    }
+  }
 
   return (
     <Drawer size={'sm'} isOpen={true} placement="right" onClose={onClose}>
@@ -120,7 +160,7 @@ export const UserModal = ({ onClose }) => {
           />
           <Button
             onClick={handleSubmit}
-            isLoading={mutation.isLoading}
+            isLoading={mutation.isLoading || mutationAvatar.isLoading}
             mt={['64px']}
             w="100%"
           >
