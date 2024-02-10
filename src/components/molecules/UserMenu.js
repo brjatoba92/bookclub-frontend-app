@@ -6,6 +6,7 @@ import { BsBookmarkHeart, BsPersonCheck } from 'react-icons/bs'
 import { RiLockPasswordLine } from 'react-icons/ri'
 import { IoDocumentTextOutline, IoDocumentOutline } from 'react-icons/io5'
 import { MdLogout } from 'react-icons/md'
+import { ChevronDownIcon } from '@chakra-ui/icons'
 
 export const UserMenu = ({ setShowModal, onLogout }) => {
   const userStore = useSelector((state) => state.user)
@@ -71,6 +72,7 @@ export const UserMenu = ({ setShowModal, onLogout }) => {
           <Flex display={['none', 'flex']}>
             <Text maxLength="40px">{userStore?.user?.name}</Text>
           </Flex>
+          <ChevronDownIcon boxSize="24px" />
         </Flex>
       </MenuButton>
       <MenuList>
