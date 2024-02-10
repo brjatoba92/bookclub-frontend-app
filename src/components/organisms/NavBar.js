@@ -30,34 +30,43 @@ export const NavBar = ({ query, setQuery }) => {
   }
 
   return (
-    <Flex
-      w="100vw"
-      flexDir="row"
-      alignItems="center"
-      justifyContent="space-between"
-      paddingX={['24px', '48px', '80px', '112px']}
-      paddingTop="24px"
-    >
-      <Image
-        h={'48px'}
-        w={['100px', '160px']}
-        src="/img/logo.svg"
-        alt="BookClub Logo"
-        cursor="pointer"
-        onClick={() => navigate('/home')}
-      />
-      <Flex display={['none', 'flex']}>
+    <>
+      <Flex
+        w="100vw"
+        flexDir="row"
+        alignItems="center"
+        justifyContent="space-between"
+        paddingX={['24px', '48px', '80px', '112px']}
+        paddingTop="24px"
+      >
+        <Image
+          h={'48px'}
+          w={['100px', '160px']}
+          src="/img/logo.svg"
+          alt="BookClub Logo"
+          cursor="pointer"
+          onClick={() => navigate('/home')}
+        />
+        <Flex display={['none', 'flex']}>
+          <SearchBar query={query} setQuery={setQuery} />
+        </Flex>
+
+        <UserMenu onLogout={onLogout} setShowModal={setShowModal} />
+
+        {showModal === 'user' && <UserModal onClose={onCloseModal} />}
+        {showModal === 'password' && <PasswordModal onClose={onCloseModal} />}
+        {showModal === 'terms' && <TermsModal onClose={onCloseModal} />}
+        {showModal === 'privacy-policy' && (
+          <PrivacyPolicyModal onClose={onCloseModal} />
+        )}
+      </Flex>
+      <Flex
+        display={['flex', 'none']}
+        paddingX={['24px', '48px', '80px', '112px']}
+        mt="16px"
+      >
         <SearchBar query={query} setQuery={setQuery} />
       </Flex>
-
-      <UserMenu onLogout={onLogout} setShowModal={setShowModal} />
-
-      {showModal === 'user' && <UserModal onClose={onCloseModal} />}
-      {showModal === 'password' && <PasswordModal onClose={onCloseModal} />}
-      {showModal === 'terms' && <TermsModal onClose={onCloseModal} />}
-      {showModal === 'privacy-policy' && (
-        <PrivacyPolicyModal onClose={onCloseModal} />
-      )}
-    </Flex>
+    </>
   )
 }

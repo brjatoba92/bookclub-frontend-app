@@ -22,8 +22,8 @@ export const SearchScreen = () => {
         maxW='100vw'
         mt={['24px', '48px']}
         flexDir={['column']}
-        alignItems={['center', 'flex-start']}
-        justifyContent={['center', 'flex-start']}
+        alignItems='flex-start'
+        justifyContent='flex-start'
       >
         <Flex paddingX={['24px', '48px', '80px', '112px']}>
           <Text.ScreenTitle>Search result</Text.ScreenTitle>
