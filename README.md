@@ -1,5 +1,5 @@
 # BookClub
-[![BookClub Demo](/public/img/demo.png 'BookClub Demo')]
+![BookClub Demo](/public/img/demo.png 'BookClub Demo')
 
 ## Description
 
@@ -31,11 +31,11 @@ git clone https://github.com/brjatoba92/bookclub-frontend-app.git
 2. Navigate to project folder and install dependencies
 
 ```
-cd bookclub-web && npm install
+cd bookclub-web && yarn install
 ```
 
 3. Run the project
 
-```
-npm run start
+````
+yarn start
 ```
